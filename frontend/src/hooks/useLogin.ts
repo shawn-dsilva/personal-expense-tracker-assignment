@@ -1,5 +1,4 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { API_BASE_URL } from "../constant";
 
 interface User {
@@ -8,7 +7,6 @@ interface User {
   username?: string;
 }
 export function useLogin() {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -30,7 +28,6 @@ export function useLogin() {
     onSuccess: (user) => {
       const { username, first_name, last_name } = user as User;
       queryClient.setQueryData(["user"], { username, first_name, last_name });
-      router.push("/dashboard");
     },
   });
 }
