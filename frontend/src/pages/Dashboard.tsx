@@ -1,9 +1,20 @@
-import React from 'react'
+import { useGetAuthUser } from '@/hooks/useGetAuthUser';
 
 const Dashboard = () => {
+    const { data: user, isLoading } = useGetAuthUser();
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+
+
     return (
-        <div>Dashboard</div>
-    )
+        <div>
+            <h1>Dashboard</h1>
+            <p>Welcome, {user.username}!</p>
+        </div>
+    );
 }
 
 export default Dashboard

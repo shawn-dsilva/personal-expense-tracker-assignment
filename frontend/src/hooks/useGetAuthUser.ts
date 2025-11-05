@@ -2,17 +2,15 @@ import { useQuery } from "@tanstack/react-query";
 import { API_BASE_URL } from "../constant";
 // api call
 export async function getAuthUser() {
-  const res = await fetch(`${API_BASE_URL}/api/auth/login/`, {
+  const res = await fetch(`${API_BASE_URL}/api/auth/user/`, {
     credentials: "include",
   });
-  if (!res.ok) {
+  if (res.ok) {
     const data = await res.json();
 
     console.log(data);
     return data;
-  } else {
-    return null;
-  }
+  } 
 }
 
 // user query

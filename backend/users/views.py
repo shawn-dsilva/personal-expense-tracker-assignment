@@ -42,3 +42,14 @@ class LoginView(TokenObtainPairView):
             )
 
         return response
+
+
+class GetAuthUserView(APIView):
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        return Response(
+            {
+                "username": user.username,
+                "email": user.email,
+            }
+        )

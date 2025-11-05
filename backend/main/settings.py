@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 ]
 
 AUTH_COOKIE = "access"
-AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 5
+AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 60 * 3
 AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24
 
 # Needed for same site none cookies to be set on browser
@@ -69,14 +69,13 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",  #  require authentication by default
-    ),
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "users.authentication.CustomJWTAuthentication",
+    ],
 }
-
 
 ROOT_URLCONF = "main.urls"
 
