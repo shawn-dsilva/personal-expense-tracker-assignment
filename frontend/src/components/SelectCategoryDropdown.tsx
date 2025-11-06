@@ -9,6 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { capitalizeFirstLetter } from "@/lib/utils"
 
 export function SelectOptionsDropdown({ isLoading = false, label, placeholder, options, setCategory }: { isLoading: boolean, label: string, placeholder: string, options: { value: number, label: string }[], setCategory: React.Dispatch<React.SetStateAction<string>> }) {
 
@@ -27,7 +28,7 @@ export function SelectOptionsDropdown({ isLoading = false, label, placeholder, o
                             <SelectLabel>{label}</SelectLabel>
                             {options.map(({ value, label }) => (
                                 <SelectItem key={value} value={value.toString()}>
-                                    {label.charAt(0).toUpperCase() + label.slice(1)}
+                                    {capitalizeFirstLetter(label)}
                                 </SelectItem>
                             ))}
                         </SelectGroup>
