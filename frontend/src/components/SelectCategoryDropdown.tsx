@@ -27,7 +27,7 @@ export function SelectOptionsDropdown({ isLoading = false, label, placeholder, o
                             <SelectLabel>{label}</SelectLabel>
                             {options.map(({ value, label }) => (
                                 <SelectItem key={value} value={value.toString()}>
-                                    {label}
+                                    {label.charAt(0).toUpperCase() + label.slice(1)}
                                 </SelectItem>
                             ))}
                         </SelectGroup>

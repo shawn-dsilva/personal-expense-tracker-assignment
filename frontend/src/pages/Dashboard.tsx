@@ -1,3 +1,4 @@
+import CreateCategory from '@/components/CreateCategory';
 import CreateTransaction from '@/components/CreateTransaction';
 import TransactionList from '@/components/TransactionList';
 import { useGetAuthUser } from '@/hooks/useGetAuthUser';
@@ -15,6 +16,7 @@ const Dashboard = () => {
         <div>
             <h1>Dashboard</h1>
             <p>Welcome, {user.username}!</p>
+            <CreateCategory />
             <CreateTransaction />
             <TransactionList />
         </div>
