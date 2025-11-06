@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -45,8 +46,8 @@ INSTALLED_APPS = [
 ]
 
 AUTH_COOKIE = "access"
-AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 60 * 24
-AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24
+AUTH_COOKIE_ACCESS_MAX_AGE = timedelta(hours=5)
+AUTH_COOKIE_REFRESH_MAX_AGE = timedelta(days=30)
 
 # Needed for same site none cookies to be set on browser
 AUTH_COOKIE_SECURE = True
@@ -57,6 +58,12 @@ AUTH_COOKIE_PATH = "/"
 
 # Allows cookies to be set on another domain
 AUTH_COOKIE_SAMESITE = "None"
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": AUTH_COOKIE_ACCESS_MAX_AGE,
+    "REFRESH_TOKEN_LIFETIME": AUTH_COOKIE_REFRESH_MAX_AGE,
+}
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
