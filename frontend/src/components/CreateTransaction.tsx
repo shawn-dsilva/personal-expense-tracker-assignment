@@ -5,27 +5,33 @@ import { Button } from './ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { SelectOptionsDropdown } from './SelectCategoryDropdown'
 import { DatePicker } from './DatePicker'
+import { useCreateTransaction } from '@/hooks/useCreateTransaction'
 
 const CATEGORIES = [
-    "Food",
-    "Transportation",
-    "Utilities",
-    "Entertainment",
-    "Salary",
-    "Rent"
+    { value: 1, label: "Food" },
+    { value: 2, label: "Transport" },
+    { value: 3, label: "Utilities" },
+    { value: 4, label: "Entertainment" },
+    { value: 5, label: "Healthcare" },
+    { value: 6, label: "Education" },
+    { value: 7, label: "Shopping" },
+    { value: 8, label: "Travel" },
+    { value: 9, label: "Miscellaneous" },
 ]
 
 const TRANSACTION_TYPES = [
-    "Income",
-    "Expense",
+    { value: "income", label: "Income" },
+    { value: "expense", label: "Expense" },
 ]
 
 
 const CreateTransaction = () => {
-    const [type, setType] = useState('')
-    const [amount, setAmount] = useState('')
-    const [date, setDate] = useState('')
-    const [category, setCategory] = useState('')
+    const [type, setType] = useState<"income" | "expense">("")
+    const [amount, setAmount] = useState<number>(0)
+    const [date, setDate] = useState<string>("")
+    const [category, setCategory] = useState<string>("")
+
+    const { mutate: createTransaction, isPending: isLoading } = useCreateTransaction();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -33,9 +39,12 @@ const CreateTransaction = () => {
             type,
             amount: parseFloat(amount),
             date,
-            category
+            category: parseInt(category),
         };
         console.log('Transaction Data:', transactionData);
+
+        createTransaction(transactionData);
+
     }
 
 

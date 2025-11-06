@@ -1,20 +1,14 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { API_BASE_URL } from "../constant";
-import { useNavigate } from "react-router-dom";
+import { Transaction } from "@/types";
 
-interface User {
-  first_name?: string;
-  last_name?: string;
-  username?: string;
-}
-export function useLogin() {
+export function useCreateTransaction() {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: async (data) => {
+    mutationFn: async (data: Transaction) => {
         console.log(data)
-      const res = await fetch(`${API_BASE_URL}/api/auth/login/`, {
+      const res = await fetch(`${API_BASE_URL}/api/transactions/add/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -31,10 +25,11 @@ export function useLogin() {
          throw new Error(text.detail);
       }
     },
-    onSuccess: (user) => {
-      const { username, first_name, last_name } = user as User;
-      queryClient.setQueryData(["user"], { username, first_name, last_name });
-      navigate("/dashboard");
+    onSuccess: (newTransaction) => {
+      queryClient.setQueryData(["transactions"], (prevTransactions:Transaction[]) => [
+        newTransaction, 
+        ...prevTransactions
+    ]);
     },
   });
 }

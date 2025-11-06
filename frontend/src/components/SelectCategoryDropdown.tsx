@@ -10,7 +10,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-export function SelectOptionsDropdown({ label, placeholder, options, setCategory }: { label: string, placeholder: string, options: string[], setCategory: React.Dispatch<React.SetStateAction<string>> }) {
+export function SelectOptionsDropdown({ label, placeholder, options, setCategory }: { label: string, placeholder: string, options: { value: number, label: string }[], setCategory: React.Dispatch<React.SetStateAction<string>> }) {
 
 
     return (
@@ -22,9 +22,9 @@ export function SelectOptionsDropdown({ label, placeholder, options, setCategory
                 <SelectContent>
                     <SelectGroup>
                         <SelectLabel>{label}</SelectLabel>
-                        {options.map((category) => (
-                            <SelectItem key={category} value={category}>
-                                {category}
+                        {options.map(({ value, label }) => (
+                            <SelectItem key={value} value={value.toString()}>
+                                {label}
                             </SelectItem>
                         ))}
                     </SelectGroup>

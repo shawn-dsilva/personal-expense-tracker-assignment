@@ -6,6 +6,9 @@ from django.contrib.auth import get_user_model
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = "Categories"
+
     def __str__(self):
         return self.name
 
@@ -13,8 +16,8 @@ class Category(models.Model):
 # Create your models here.
 class Transaction(models.Model):
     class Type(models.TextChoices):
-        INCOME = "INCOME", "Income"
-        EXPENSE = "EXPENSE", "Expense"
+        INCOME = "income", "Income"
+        EXPENSE = "expense", "Expense"
 
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     type = models.CharField(max_length=7, choices=Type.choices)

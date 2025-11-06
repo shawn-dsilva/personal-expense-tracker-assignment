@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "users",
+    "transactions",
 ]
 
 AUTH_COOKIE = "access"
-AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 60 * 3
+AUTH_COOKIE_ACCESS_MAX_AGE = 60 * 60 * 24
 AUTH_COOKIE_REFRESH_MAX_AGE = 60 * 60 * 24
 
 # Needed for same site none cookies to be set on browser
