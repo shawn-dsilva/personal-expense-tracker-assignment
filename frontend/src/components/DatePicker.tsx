@@ -27,7 +27,6 @@ export function DatePicker({ date, setDate }: { date: Date | undefined, setDate:
                         id="date"
                         className="w-full justify-between font-normal"
                     >
-                        {console.log(date)}
                         {date ? date.toDateString() : "Select date"}
                         <ChevronDownIcon />
                     </Button>
