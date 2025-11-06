@@ -65,6 +65,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": AUTH_COOKIE_REFRESH_MAX_AGE,
 }
 
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -83,7 +84,10 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "users.authentication.CustomJWTAuthentication",
     ],
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 2,
 }
+
 
 ROOT_URLCONF = "main.urls"
 
