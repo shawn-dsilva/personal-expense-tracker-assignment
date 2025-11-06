@@ -4,6 +4,7 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { SelectOptionsDropdown } from './SelectCategoryDropdown'
+import { DatePicker } from './DatePicker'
 
 const CATEGORIES = [
     "Food",
@@ -46,11 +47,12 @@ const CreateTransaction = () => {
             </CardHeader>
             <form onSubmit={handleSubmit}>
 
-                <CardContent>
-                    <div>
-                        <SelectOptionsDropdown options={TRANSACTION_TYPES} label="Transaction Type" placeholder="Is This an Income or Expense?" setCategory={setType} />
+                <CardContent className='flex flex-wrap gap-4 p-3'>
+                    <div className='w-[48%] flex flex-col gap-3'>
+                        <Label>Transaction Type</Label>
+                        <SelectOptionsDropdown options={TRANSACTION_TYPES} label="Transaction Type" placeholder="Income or Expense?" setCategory={setType} />
                     </div>
-                    <div>
+                    <div className='w-[48%] flex flex-col gap-3'>
                         <Label>Amount</Label>
                         <Input
                             type="number"
@@ -58,15 +60,11 @@ const CreateTransaction = () => {
                             onChange={(e) => setAmount(e.target.value)}
                         />
                     </div>
-                    <div>
-                        <Label>Date:</Label>
-                        <Input
-                            type="date"
-                            name="date"
-                            onChange={(e) => setDate(e.target.value)}
-                        />
+                    <div className='w-[48%] flex flex-col gap-3'>
+                        <DatePicker date={date ? new Date(date) : undefined} setDate={(date) => setDate(date ? date.toISOString().split('T')[0] : '')} />
                     </div>
-                    <div>
+                    <div className='w-[48%] flex flex-col gap-3'>
+                        <Label>Category</Label>
                         <SelectOptionsDropdown options={CATEGORIES} label="Categories" placeholder="Select a category" setCategory={setCategory} />
                     </div>
                 </CardContent>

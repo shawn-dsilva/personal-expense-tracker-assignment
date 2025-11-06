@@ -3,7 +3,6 @@ import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
-import "./App.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
