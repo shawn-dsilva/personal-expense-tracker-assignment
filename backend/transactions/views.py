@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
+from transactions.models import Transaction
 from transactions.serializers import TransactionSerializer
 
 
@@ -22,3 +23,15 @@ class CreateTransactionView(APIView):
             serializer.save()
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+
+
+class ListAllTransactionsView(APIView):
+    def get(self, request, *args, **kwargs):
+        # TODO: ADD PAGINATION
+
+        user = request.user.id
+        serializer = TransactionSerializer(
+            Transaction.objects.filter(user=user).order_by("-date"),
+            many=True,
+        )
+        return Response(serializer.data, status=200)
