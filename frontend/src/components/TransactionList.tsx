@@ -9,9 +9,9 @@ const TransactionList = () => {
             <h2 className='text-2xl font-bold mx-auto m-3'>Transaction List</h2>
             {isLoading && <p>Loading...</p>}
             {isError && <p>Error loading transactions</p>}
-            {transactions && (
+            {transactions && transactions.results.length > 0 && (
                 <ul>
-                    {transactions.map(({ id, type, category_read, amount, date }) => (
+                    {transactions.results.map(({ id, type, category_read, amount, date }) => (
                         <li key={id} className='text-xl pt-3 flex  border-gray-200 border-dashed border-t-2'>
                             <div className='flex flex-col pb-3'>
                                 <span className='font-semibold'>{capitalizeFirstLetter(category_read?.label)}</span>

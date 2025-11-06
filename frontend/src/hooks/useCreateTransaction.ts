@@ -7,7 +7,7 @@ export function useCreateTransaction() {
 
   return useMutation({
     mutationFn: async (data: Transaction) => {
-        console.log(data)
+      console.log(data);
       const res = await fetch(`${API_BASE_URL}/api/transactions/add/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -20,16 +20,19 @@ export function useCreateTransaction() {
         console.log(data);
         return data;
       } else {
-         const text = await res.json();
-         console.log(text);
-         throw new Error(text.detail);
+        const text = await res.json();
+        console.log(text);
+        throw new Error(text.detail);
       }
     },
     onSuccess: (newTransaction) => {
-      queryClient.setQueryData(["transactions"], (prevTransactions:Transaction[]) => [
-        newTransaction, 
-        ...prevTransactions
-    ]);
+      queryClient.setQueryData(
+        ["transactions"],
+        (prevTransactions: { results: Transaction[] }) => ({
+          ...prevTransactions,
+          results: [newTransaction, ...prevTransactions.results],
+        })
+      );
     },
   });
 }

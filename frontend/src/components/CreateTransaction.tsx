@@ -72,7 +72,7 @@ const CreateTransaction = () => {
                         />
                     </div>
                     <div className='w-[48%] flex flex-col gap-3'>
-                        <DatePicker date={date ? new Date(date) : undefined} setDate={(date) => setDate(date ? date.toISOString().split('T')[0] : '')} />
+                        <DatePicker date={date ? new Date(date) : undefined} setDate={(date) => setDate(date)} />
                     </div>
                     <div className='w-[48%] flex flex-col gap-3'>
                         <Label>Category</Label>
