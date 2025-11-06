@@ -5,6 +5,21 @@ import { Button } from './ui/button'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { SelectOptionsDropdown } from './SelectCategoryDropdown'
 
+const CATEGORIES = [
+    "Food",
+    "Transportation",
+    "Utilities",
+    "Entertainment",
+    "Salary",
+    "Rent"
+]
+
+const TRANSACTION_TYPES = [
+    "Income",
+    "Expense",
+]
+
+
 const CreateTransaction = () => {
     const [type, setType] = useState('')
     const [amount, setAmount] = useState('')
@@ -33,15 +48,10 @@ const CreateTransaction = () => {
 
                 <CardContent>
                     <div>
-                        <Label>Type:</Label>
-                        <Input
-                            type="text"
-                            name="type"
-                            onChange={(e) => setType(e.target.value)}
-                        />
+                        <SelectOptionsDropdown options={TRANSACTION_TYPES} label="Transaction Type" placeholder="Is This an Income or Expense?" setCategory={setType} />
                     </div>
                     <div>
-                        <Label>Amount:</Label>
+                        <Label>Amount</Label>
                         <Input
                             type="number"
                             name="amount"
@@ -57,7 +67,7 @@ const CreateTransaction = () => {
                         />
                     </div>
                     <div>
-                        <SelectOptionsDropdown label="Categories" placeholder="Select a category" setCategory={setCategory} />
+                        <SelectOptionsDropdown options={CATEGORIES} label="Categories" placeholder="Select a category" setCategory={setCategory} />
                     </div>
                 </CardContent>
                 <CardFooter>

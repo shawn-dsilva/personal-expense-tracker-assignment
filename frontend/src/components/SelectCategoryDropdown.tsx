@@ -10,16 +10,9 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-export function SelectOptionsDropdown({ label, placeholder, setCategory }: { label: string, placeholder: string, setCategory: React.Dispatch<React.SetStateAction<string>> }) {
+export function SelectOptionsDropdown({ label, placeholder, options, setCategory }: { label: string, placeholder: string, options: string[], setCategory: React.Dispatch<React.SetStateAction<string>> }) {
 
-    const CATEGORIES = [
-        "Food",
-        "Transportation",
-        "Utilities",
-        "Entertainment",
-        "Salary",
-        "Rent"
-    ]
+
     return (
         <Select>
             <SelectTrigger className="w-[180px]">
@@ -28,7 +21,7 @@ export function SelectOptionsDropdown({ label, placeholder, setCategory }: { lab
             <SelectContent>
                 <SelectGroup>
                     <SelectLabel>{label}</SelectLabel>
-                    {CATEGORIES.map((category) => (
+                    {options.map((category) => (
                         <SelectItem key={category} value={category} onKeyDown={() => setCategory(category)}>
                             {category}
                         </SelectItem>
