@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
@@ -12,6 +12,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
 
             <Routes>
+                <Route path="/" element={<Navigate to="/dashboard" />} />
                 <Route path="/login" element={<Login />} />
                 {/* Protected Routes */}
                 <Route element={<ProtectedRoute />}>
