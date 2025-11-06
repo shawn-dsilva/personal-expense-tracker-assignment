@@ -1,3 +1,4 @@
+import CreateTransaction from '@/components/CreateTransaction';
 import { useGetAuthUser } from '@/hooks/useGetAuthUser';
 
 const Dashboard = () => {
@@ -13,6 +14,7 @@ const Dashboard = () => {
         <div>
             <h1>Dashboard</h1>
             <p>Welcome, {user.username}!</p>
+            <CreateTransaction />
         </div>
     );
 }
