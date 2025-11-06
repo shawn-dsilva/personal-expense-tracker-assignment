@@ -11,10 +11,10 @@ const TransactionList = () => {
             {isError && <p>Error loading transactions</p>}
             {transactions && (
                 <ul>
-                    {transactions.map(({ id, type, category, amount, date }) => (
+                    {transactions.map(({ id, type, category_read, amount, date }) => (
                         <li key={id} className='text-xl pt-3 flex  border-gray-200 border-dashed border-t-2'>
                             <div className='flex flex-col pb-3'>
-                                <span className='font-semibold'>{capitalizeFirstLetter(category.label)}</span>
+                                <span className='font-semibold'>{capitalizeFirstLetter(category_read?.label)}</span>
                                 <span>{dayjs(date).format('ddd, DD MMM YYYY')}</span>
                             </div>
                             <span className={

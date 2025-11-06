@@ -1,3 +1,4 @@
+from os import read
 from unicodedata import category
 from rest_framework import serializers
 from .models import Category, Transaction
@@ -13,8 +14,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)
+    # Source is important to map the nested serializer to the correct field
+    category_read = CategorySerializer(source="category", read_only=True)
 
     class Meta:
         model = Transaction
-        fields = ["id", "type", "amount", "date", "category", "user"]
+        fields = ["id", "type", "amount", "date", "category_read", "category", "user"]
