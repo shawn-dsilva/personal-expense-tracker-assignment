@@ -1,9 +1,9 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { API_BASE_URL } from "@/constant";
 // api call
-export async function getAllTransactions({ pageParam = 0 }) {
+export async function getAllTransactions({ pageParam }) {
   const res = await fetch(
-    `${API_BASE_URL}/api/transactions/all/?limit=2&offset=${pageParam}`,
+    `${API_BASE_URL}/api/transactions/all/?page=${pageParam}`,
     {
       credentials: "include",
     }
@@ -22,7 +22,7 @@ export function useGetPaginatedTransactionsList() {
   return useInfiniteQuery({
     queryKey: ["transactions"],
     queryFn: getAllTransactions,
-    initialPageParam: 0,
+    initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage.next) {
         return lastPage.next;

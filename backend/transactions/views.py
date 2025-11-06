@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from transactions.models import Category, Transaction
 from transactions.serializers import CategorySerializer, TransactionSerializer
-from rest_framework.pagination import LimitOffsetPagination
+from .pagination import OnlyPageNumberPagination
 
 
 # Create your views here.
@@ -26,13 +26,13 @@ class CreateTransactionView(APIView):
         return Response(serializer.errors, status=400)
 
 
-class ListAllTransactionsView(APIView, LimitOffsetPagination):
+class ListAllTransactionsView(APIView, OnlyPageNumberPagination):
     def get(self, request, *args, **kwargs):
         # TODO: ADD PAGINATION
 
         user = request.user.id
         transactions = Transaction.objects.filter(user=user).order_by("-date")
-        paginator = LimitOffsetPagination()
+        paginator = OnlyPageNumberPagination()
         result_page = paginator.paginate_queryset(transactions, request)
         serializer = TransactionSerializer(
             result_page,
