@@ -1,3 +1,4 @@
+from unicodedata import category
 from rest_framework import serializers
 from .models import Category, Transaction
 
@@ -12,6 +13,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only=True)
 
     class Meta:
         model = Transaction
