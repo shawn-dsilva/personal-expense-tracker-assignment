@@ -10,7 +10,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 
-export function SelectOptionsDropdown({ label, placeholder, options, setCategory }: { label: string, placeholder: string, options: { value: number, label: string }[], setCategory: React.Dispatch<React.SetStateAction<string>> }) {
+export function SelectOptionsDropdown({ isLoading = false, label, placeholder, options, setCategory }: { isLoading: boolean, label: string, placeholder: string, options: { value: number, label: string }[], setCategory: React.Dispatch<React.SetStateAction<string>> }) {
 
 
     return (
@@ -20,14 +20,18 @@ export function SelectOptionsDropdown({ label, placeholder, options, setCategory
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
                 <SelectContent>
-                    <SelectGroup>
-                        <SelectLabel>{label}</SelectLabel>
-                        {options.map(({ value, label }) => (
-                            <SelectItem key={value} value={value.toString()}>
-                                {label}
-                            </SelectItem>
-                        ))}
-                    </SelectGroup>
+                    {isLoading ? (
+                        <div className="p-4 text-center">Loading...</div>
+                    ) :
+                        <SelectGroup>
+                            <SelectLabel>{label}</SelectLabel>
+                            {options.map(({ value, label }) => (
+                                <SelectItem key={value} value={value.toString()}>
+                                    {label}
+                                </SelectItem>
+                            ))}
+                        </SelectGroup>
+                    }
                 </SelectContent>
             </Select>
         </div>

@@ -1,10 +1,14 @@
-import re
 from rest_framework import serializers
-
-from users.serializers import UserSerializer
 from .models import Category, Transaction
 
-from django.contrib.auth import get_user_model
+
+class CategorySerializer(serializers.ModelSerializer):
+    value = serializers.IntegerField(source="id", read_only=True)
+    label = serializers.CharField(source="name", read_only=True)
+
+    class Meta:
+        model = Category
+        fields = ["id", "value", "name", "label"]
 
 
 class TransactionSerializer(serializers.ModelSerializer):

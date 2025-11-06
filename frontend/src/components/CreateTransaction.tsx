@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { SelectOptionsDropdown } from './SelectCategoryDropdown'
 import { DatePicker } from './DatePicker'
 import { useCreateTransaction } from '@/hooks/useCreateTransaction'
+import { useGetAllCategories } from '@/hooks/useGetCategoryList'
 
 const CATEGORIES = [
     { value: 1, label: "Food" },
@@ -32,6 +33,7 @@ const CreateTransaction = () => {
     const [category, setCategory] = useState<string>("")
 
     const { mutate: createTransaction, isPending: isLoading } = useCreateTransaction();
+    const { data: categories, isLoading: categoriesLoading } = useGetAllCategories();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -74,7 +76,7 @@ const CreateTransaction = () => {
                     </div>
                     <div className='w-[48%] flex flex-col gap-3'>
                         <Label>Category</Label>
-                        <SelectOptionsDropdown options={CATEGORIES} label="Categories" placeholder="Select a category" setCategory={setCategory} />
+                        <SelectOptionsDropdown isLoading={categoriesLoading} options={categories} label="Categories" placeholder="Select a category" setCategory={setCategory} />
                     </div>
                 </CardContent>
                 <CardFooter>
