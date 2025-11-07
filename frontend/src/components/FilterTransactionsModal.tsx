@@ -31,7 +31,7 @@ const FilterTransactionsModal = () => {
                     Filter
                 </Button>
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className='gap-3!'>
                 <DialogHeader>
                     <DialogTitle>Filter Transactions</DialogTitle>
                     <DialogDescription>
@@ -42,8 +42,8 @@ const FilterTransactionsModal = () => {
                 <div>
                     <Label className="mt-4 font-semibold">Amount</Label>
                     <div className='flex gap-3'>
-                        <Input type="number" placeholder="Enter Starting Amount" className="mb-4 mt-2" />
-                        <Input type="number" placeholder="Enter Ending Amount" className="mb-4 mt-2" />
+                        <Input type="number" placeholder="Enter Starting Amount" className="mb-2 mt-2" />
+                        <Input type="number" placeholder="Enter Ending Amount" className="mb-2 mt-2" />
                     </div>
                 </div>
 
@@ -56,6 +56,7 @@ const FilterTransactionsModal = () => {
 
                     <div>
                         <DatePicker
+                            className="min-w-10/12"
                             label="Select A Date Range"
                             mode="range"
                             date={dateRange}

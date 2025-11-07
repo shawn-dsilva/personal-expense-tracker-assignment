@@ -11,7 +11,12 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { DateRange } from "react-day-picker"
+import dayjs from "dayjs"
+
+const toHumanReadableDate = (date: Date) => {
+    return dayjs(date).format("MMM D, YYYY")
+}
+
 
 export function DatePicker({ label = "Date", date, setDate, mode = "single" }: { date: Date | undefined, setDate: (date: Date | undefined) => void }) {
     const [open, setOpen] = React.useState(false)
@@ -29,7 +34,7 @@ export function DatePicker({ label = "Date", date, setDate, mode = "single" }: {
                         className="w-full justify-between font-normal"
                     >
                         {
-                            mode === "range" ? `${date.from.toDateString()} To ${date.to ? date.to.toDateString() : "Select end date"}` : (date ? date.toDateString() : "Select date")
+                            mode === "range" ? `${toHumanReadableDate(date.from)} To ${date.to ? toHumanReadableDate(date.to) : "Selected End Date"}` : (date ? toHumanReadableDate(date) : "Select Date")
                         }
 
                         <ChevronDownIcon />
