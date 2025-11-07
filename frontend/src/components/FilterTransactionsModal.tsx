@@ -3,6 +3,7 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
@@ -14,9 +15,11 @@ import { useGetAllCategories } from '@/hooks/useGetCategoryList';
 import { Label } from '@radix-ui/react-label'
 import { DatePicker } from './DatePicker'
 import { type DateRange } from "react-day-picker"
+import { Input } from './ui/input'
 
-const FilterTransactionsModal = ({ setCategory }) => {
+const FilterTransactionsModal = () => {
     const { data: categories, isLoading: categoriesLoading } = useGetAllCategories();
+    const [category, setCategory] = useState<string>("")
     const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
         from: new Date(),
     })
@@ -32,18 +35,38 @@ const FilterTransactionsModal = ({ setCategory }) => {
                 <DialogHeader>
                     <DialogTitle>Filter Transactions</DialogTitle>
                     <DialogDescription>
-                        Use the Options below to filter transactions by category.
+                        Use the Options below to filter transactions by category, date and amount.
                     </DialogDescription>
                 </DialogHeader>
 
-                <Label className="mt-4 mb-2 font-semibold">Category</Label>
-                <SelectOptionsDropdown isLoading={categoriesLoading} options={categories} label="Categories" placeholder="Select a category" setCategory={setCategory} />
+                <div>
+                    <Label className="mt-4 font-semibold">Amount</Label>
+                    <div className='flex gap-3'>
+                        <Input type="number" placeholder="Enter Starting Amount" className="mb-4 mt-2" />
+                        <Input type="number" placeholder="Enter Ending Amount" className="mb-4 mt-2" />
+                    </div>
+                </div>
 
-                <Label className="mt-4 mb-2 font-semibold">Select A Date Range</Label>
-                <DatePicker mode="range"
-                    date={dateRange}
-                    setDate={setDateRange} />
+
+                <div className='flex gap-3'>
+                    <div className="flex gap-1 flex-col w-full">
+                        <Label className="font-semibold">Category</Label>
+                        <SelectOptionsDropdown isLoading={categoriesLoading} options={categories} label="Categories" placeholder="Select a category" setCategory={setCategory} />
+                    </div>
+
+                    <div>
+                        <DatePicker
+                            label="Select A Date Range"
+                            mode="range"
+                            date={dateRange}
+                            setDate={setDateRange} />
+                    </div>
+                </div>
+                <DialogFooter>
+                    <Button type="submit" size={"lg"}>Apply Filters</Button>
+                </DialogFooter>
             </DialogContent>
+
         </Dialog>
     )
 }

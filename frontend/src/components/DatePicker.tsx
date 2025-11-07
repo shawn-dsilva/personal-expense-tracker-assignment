@@ -13,13 +13,13 @@ import {
 } from "@/components/ui/popover"
 import { DateRange } from "react-day-picker"
 
-export function DatePicker({ date, setDate, mode = "single" }: { date: Date | undefined, setDate: (date: Date | undefined) => void }) {
+export function DatePicker({ label = "Date", date, setDate, mode = "single" }: { date: Date | undefined, setDate: (date: Date | undefined) => void }) {
     const [open, setOpen] = React.useState(false)
 
     return (
-        <div className="flex flex-col gap-3 w-full">
-            <Label htmlFor="date" className="px-1">
-                Date
+        <div className="flex flex-col gap-1 w-full">
+            <Label className="text-base">
+                {label}
             </Label>
             <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
