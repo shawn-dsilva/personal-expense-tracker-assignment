@@ -1,6 +1,7 @@
 import CreateCategory from '@/components/CreateCategory';
 import CreateTransaction from '@/components/CreateTransaction';
 import TransactionList from '@/components/TransactionList';
+import TransactionOverview from '@/components/TransactionOverview';
 import { useGetAuthUser } from '@/hooks/useGetAuthUser';
 
 const Dashboard = () => {
@@ -16,9 +17,10 @@ const Dashboard = () => {
         <div>
             <h1>Dashboard</h1>
             <p>Welcome, {user.username}!</p>
+            <TransactionOverview />
+            <TransactionList />
             <CreateCategory />
             <CreateTransaction />
-            <TransactionList />
         </div>
     );
 }

@@ -41,6 +41,23 @@ class ListAllTransactionsView(APIView, OnlyPageNumberPagination):
         return paginator.get_paginated_response(serializer.data)
 
 
+class DisplayTransactionSummaryView(APIView):
+    def get(self, request, *args, **kwargs):
+        user = request.user.id
+        transactions = Transaction.objects.filter(user=user)
+
+        total_income = sum(t.amount for t in transactions if t.type == "income")
+        total_expense = sum(t.amount for t in transactions if t.type == "expense")
+        balance = total_income - total_expense
+
+        summary = {
+            "total_income": total_income,
+            "total_expense": total_expense,
+            "balance": balance,
+        }
+        return Response(summary, status=200)
+
+
 class CreateCategoryView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = CategorySerializer(data=request.data)
