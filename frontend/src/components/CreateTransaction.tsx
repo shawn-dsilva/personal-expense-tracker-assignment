@@ -29,7 +29,7 @@ const TRANSACTION_TYPES = [
 const CreateTransaction = () => {
     const [type, setType] = useState<"income" | "expense">("")
     const [amount, setAmount] = useState<number>(0)
-    const [date, setDate] = useState<string>("")
+    const [date, setDate] = useState<string>(null)
     const [category, setCategory] = useState<string>("")
 
     const { mutate: createTransaction, isPending: isLoading } = useCreateTransaction();
@@ -72,7 +72,7 @@ const CreateTransaction = () => {
                         />
                     </div>
                     <div className='w-[48%] flex flex-col gap-3'>
-                        <DatePicker date={date ? new Date(date) : undefined} setDate={(date) => setDate(date)} />
+                        <DatePicker date={date ? new Date(date.from) : undefined} setDate={(date) => setDate(date)} />
                     </div>
                     <div className='w-[48%] flex flex-col gap-3'>
                         <Label>Category</Label>
