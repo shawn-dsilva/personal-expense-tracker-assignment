@@ -32,6 +32,11 @@ class ListAllTransactionsView(APIView, OnlyPageNumberPagination):
 
         user = request.user.id
         transactions = Transaction.objects.filter(user=user).order_by("-date")
+
+        if request.query_params.get("category"):
+            category = request.query_params.get("category")
+            transactions = transactions.filter(category_id=category)
+
         paginator = OnlyPageNumberPagination()
         result_page = paginator.paginate_queryset(transactions, request)
         serializer = TransactionSerializer(
