@@ -17,10 +17,13 @@ const Dashboard = () => {
         <div>
             <h1>Dashboard</h1>
             <p>Welcome, {user.username}!</p>
-            <TransactionOverview />
-            <TransactionList />
-            <CreateCategory />
-            <CreateTransaction />
+            <div className='mx-auto w-lg'>
+                <TransactionOverview />
+                <TransactionList />
+                <CreateCategory />
+                <CreateTransaction />
+            </div>
+
         </div>
     );
 }
