@@ -5,8 +5,7 @@ import dayjs from 'dayjs';
 
 import { useState } from 'react';
 import PaginationControls from './PaginationControls';
-import { SelectOptionsDropdown } from './SelectCategoryDropdown';
-import { useGetAllCategories } from '@/hooks/useGetCategoryList';
+import FilterTransactionsModal from './FilterTransactionsModal';
 
 const TransactionItem = ({ data }) => {
     const { id, type, category_read, amount, date } = data;
@@ -29,7 +28,6 @@ const TransactionList = () => {
     const [category, setCategory] = useState(null);
 
     const { data: transactions, isLoading, isError } = useGetPaginatedTransactions(currPage, category);
-    const { data: categories, isLoading: categoriesLoading } = useGetAllCategories();
 
 
     if (isLoading) {
@@ -42,10 +40,13 @@ const TransactionList = () => {
 
     return (
         <div className="flex w-lg gap-2 flex-col mx-auto p-4 border-dashed border-2 border-gray-300 rounded-md my-4">
-            <h2 className='text-2xl font-bold mx-auto m-3'>
-                Transaction List
-            </h2>
-            <SelectOptionsDropdown isLoading={categoriesLoading} options={categories} label="Categories" placeholder="Select a category" setCategory={setCategory} />
+            <div className='relative flex'>
+                <h2 className='text-2xl font-bold mx-auto my-3'>
+                    Transaction List
+                </h2>
+                <FilterTransactionsModal setCategory={setCategory} />
+            </div>
+
             <ul>
                 {transactions && transactions.results.length > 0 && (
                     transactions.results.map((transaction) => (

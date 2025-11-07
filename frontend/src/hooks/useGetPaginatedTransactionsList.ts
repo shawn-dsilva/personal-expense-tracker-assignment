@@ -2,7 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { API_BASE_URL } from "@/constant";
 // api call
 export async function getAllTransactions(currentPage:number, category:string) {
-   const res = await fetch(`${API_BASE_URL}/api/transactions/all/?page=${currentPage}&category=${category}`, {
+    let url = `${API_BASE_URL}/api/transactions/all/?page=${currentPage}`;
+    if (category) {
+      url += `&category=${category}`;
+    }
+   const res = await fetch(url, {
       credentials: "include",
     });
     if (res.ok) {
