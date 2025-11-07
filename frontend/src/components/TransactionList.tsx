@@ -1,31 +1,22 @@
-import { useGetPaginatedTransactionsList } from '@/hooks/useGetPaginatedTransactionList';
-import { useGetAllTransactions } from '@/hooks/useGetTransactionsList';
+import { useGetPaginatedTransactions } from '@/hooks/useGetPaginatedTransactionsList';
 import { capitalizeFirstLetter } from '@/lib/utils';
 import dayjs from 'dayjs';
 import {
     Pagination,
     PaginationContent,
-    PaginationEllipsis,
     PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
 } from "@/components/ui/pagination"
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState } from 'react';
+import { Transaction } from '@/types';
+
+
+const ITEM_COUNT_PER_PAGE = 2;
 
 const TransactionList = () => {
-    // const { data:transactions transactions, isLoading, isError } = useGetAllTransactions();
-
-    const {
-        data: transactions,
-        isLoading,
-        isError,
-        fetchNextPage,
-        fetchPreviousPage,
-        hasNextPage,
-        isFetchingNextPage,
-    } = useGetPaginatedTransactionsList();
+    const [currPage, setCurrPage] = useState(1);
+    const { data: transactions, isLoading, isError } = useGetPaginatedTransactions(currPage);
 
     if (isLoading) {
         return <p>Loading...</p>
@@ -35,15 +26,13 @@ const TransactionList = () => {
         return <p>Error loading transactions</p>
     }
 
-    console.log(transactions)
-
     return (
         <div className="flex w-lg gap-2 flex-col mx-auto p-4 border-dashed border-2 border-gray-300 rounded-md my-4">
             <h2 className='text-2xl font-bold mx-auto m-3'>Transaction List</h2>
             <ul>
 
-                {transactions && transactions.pages.length > 0 && (
-                    transactions.pages[transactions.pageParams.length - 1].results.map(({ id, type, category_read, amount, date }) => (
+                {transactions && transactions.results.length > 0 && (
+                    transactions.results.map(({ id, type, category_read, amount, date }: Transaction) => (
                         <li key={id} className='text-xl pt-3 flex  border-gray-200 border-dashed border-t-2'>
                             <div className='flex flex-col pb-3'>
                                 <span className='font-semibold'>{capitalizeFirstLetter(category_read?.label)}</span>
@@ -61,22 +50,22 @@ const TransactionList = () => {
             <Pagination>
                 <PaginationContent>
                     <PaginationItem>
-                        <Button variant="outline" onClick={() => fetchPreviousPage()}>
+                        <Button variant="outline" onClick={() => setCurrPage((prev) => Math.max(prev - 1, 1))} disabled={!transactions.previous}>
                             <ChevronLeft />
                             Prev
                         </Button>
                     </PaginationItem>
                     {
-                        transactions?.pageParams.map((pageParam, index) => (
+                        Array.from({ length: Math.ceil(transactions.count / ITEM_COUNT_PER_PAGE) }, (_, index) => index).map((_, index) => (
                             <PaginationItem key={index}>
-                                <Button variant="outline">
+                                <Button variant="outline" className={currPage === index + 1 ? 'bg-blue-500 text-white' : ""} onClick={() => setCurrPage(index + 1)}>
                                     {index + 1}
                                 </Button>
                             </PaginationItem>
                         ))
                     }
                     <PaginationItem>
-                        <Button variant="outline" onClick={() => fetchNextPage()}>
+                        <Button variant="outline" onClick={() => transactions.next && setCurrPage((prev) => prev + 1)} disabled={!transactions.next}>
                             Next
                             <ChevronRight />
                         </Button>
