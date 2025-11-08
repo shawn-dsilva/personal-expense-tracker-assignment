@@ -7,7 +7,7 @@ import {
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const ITEM_COUNT_PER_PAGE = 2;
+const ITEM_COUNT_PER_PAGE = 4;
 
 const PaginationControls = ({ transactions, currPage, setCurrPage }) => {
     return (

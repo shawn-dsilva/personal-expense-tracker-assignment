@@ -39,7 +39,7 @@ export async function getAllTransactions(currentPage:number, filters:Transaction
 export function useGetPaginatedTransactions(currentPage:number, filters:TransactionFilters) {
   // run the query
   return useQuery({
-    queryKey: ["transactions", currentPage, filters],
+    queryKey: ["transactions", currentPage],
     queryFn: () => getAllTransactions(currentPage, filters),
     placeholderData: (prev) => prev
   });

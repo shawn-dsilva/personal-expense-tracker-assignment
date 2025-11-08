@@ -40,7 +40,7 @@ const CreateTransaction = () => {
         const transactionData = {
             type,
             amount: parseFloat(amount),
-            date,
+            date: date.from,
             category: parseInt(category),
         };
         console.log('Transaction Data:', transactionData);

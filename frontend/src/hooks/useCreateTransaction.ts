@@ -27,7 +27,7 @@ export function useCreateTransaction() {
     },
     onSuccess: (newTransaction) => {
       queryClient.setQueryData(
-        ["transactions"],
+        ["transactions", 1],
         (prevTransactions: { results: Transaction[] }) => ({
           ...prevTransactions,
           results: [newTransaction, ...prevTransactions.results],
