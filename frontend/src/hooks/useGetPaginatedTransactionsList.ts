@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_BASE_URL } from "@/constant";
 import { TransactionFilters } from "@/types";
+import dayjs from "dayjs";
 // api call
 export async function getAllTransactions(currentPage:number, filters:TransactionFilters) {
     const { category, dateRange, amounts } = filters || {};
@@ -13,7 +14,7 @@ export async function getAllTransactions(currentPage:number, filters:Transaction
 
     for(const key in dateRange){
         if(dateRange[key]){
-            url += `&date_${key}=${dateRange[key]}`
+            url += `&date_${key}=${dayjs(dateRange[key]).toISOString()}`
         }
     }
 
