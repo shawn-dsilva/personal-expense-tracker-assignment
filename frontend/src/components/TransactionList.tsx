@@ -25,9 +25,9 @@ const TransactionItem = ({ data }) => {
 
 const TransactionList = () => {
     const [currPage, setCurrPage] = useState(1);
-    const [category, setCategory] = useState(null);
+    const [filters, setFilters] = useState({});
 
-    const { data: transactions, isLoading, isError } = useGetPaginatedTransactions(currPage, category);
+    const { data: transactions, isLoading, isError } = useGetPaginatedTransactions(currPage, filters);
 
 
     if (isLoading) {
@@ -44,7 +44,7 @@ const TransactionList = () => {
                 <h2 className='text-2xl font-bold mx-auto my-3'>
                     Transaction List
                 </h2>
-                <FilterTransactionsModal setCategory={setCategory} />
+                <FilterTransactionsModal setFilters={setFilters} />
             </div>
 
             <ul>

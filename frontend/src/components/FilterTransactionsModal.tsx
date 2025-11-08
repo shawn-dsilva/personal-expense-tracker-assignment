@@ -17,12 +17,15 @@ import { DatePicker } from './DatePicker'
 import { type DateRange } from "react-day-picker"
 import { Input } from './ui/input'
 
-const FilterTransactionsModal = () => {
+const FilterTransactionsModal = ({ setFilters }) => {
     const { data: categories, isLoading: categoriesLoading } = useGetAllCategories();
+
     const [category, setCategory] = useState<string>("")
     const [dateRange, setDateRange] = React.useState<DateRange | undefined>({
         from: new Date(),
     })
+    const [amounts, setAmounts] = useState<{ min: number; max: number }>({ min: 0, max: 0 })
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -39,12 +42,16 @@ const FilterTransactionsModal = () => {
                     </DialogDescription>
                 </DialogHeader>
 
-                <div>
-                    <Label className="mt-4 font-semibold">Amount</Label>
-                    <div className='flex gap-3'>
-                        <Input type="number" placeholder="Enter Starting Amount" className="mb-2 mt-2" />
-                        <Input type="number" placeholder="Enter Ending Amount" className="mb-2 mt-2" />
+                <div className='flex gap-3 w-full'>
+                    <div className='w-[48%]'>
+                        <Label className='font-semibold'>Min Amount</Label>
+                        <Input type="number" placeholder="Enter Min Amount" className="mb-2 mt-2" value={amounts.min} onChange={(e) => setAmounts((prev) => ({ ...prev, min: Number(e.target.value) }))} />
                     </div>
+                    <div className='w-[48%]'>
+                        <Label className='font-semibold'>Max Amount</Label>
+                        <Input type="number" placeholder="Enter Max Amount" className="mb-2 mt-2" value={amounts.max} onChange={(e) => setAmounts((prev) => ({ ...prev, max: Number(e.target.value) }))} />
+                    </div>
+
                 </div>
 
 
@@ -64,7 +71,7 @@ const FilterTransactionsModal = () => {
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button type="submit" size={"lg"}>Apply Filters</Button>
+                    <Button type="submit" size={"lg"} onClick={() => setFilters({ category, dateRange, amounts })}>Apply Filters</Button>
                 </DialogFooter>
             </DialogContent>
 
