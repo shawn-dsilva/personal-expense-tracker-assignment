@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import PaginationControls from './PaginationControls';
 import FilterTransactionsModal from './FilterTransactionsModal';
+import EditDeleteDropdown from './EditDeleteDropdown';
 
 const TransactionItem = ({ data }) => {
     const { id, type, category_read, amount, date } = data;
@@ -15,10 +16,13 @@ const TransactionItem = ({ data }) => {
             <span>{dayjs(date).format('ddd, DD MMM YYYY')}</span>
         </div>
 
+
         <span className={
             `font-bold my-auto ml-auto ${type === 'income' ? "text-green-500 before:content-['_+_']" : "text-red-500 before:content-['_-_']"
             }`
         }>${amount}</span>
+        <EditDeleteDropdown transactionId={id} />
+
     </li>
 }
 
