@@ -37,6 +37,20 @@ class ListAllTransactionsView(APIView, OnlyPageNumberPagination):
             category = request.query_params.get("category")
             transactions = transactions.filter(category_id=category)
 
+        if request.query_params.get("date_from") and request.query_params.get(
+            "date_to"
+        ):
+            date_from = request.query_params.get("date_from")
+            date_to = request.query_params.get("date_to")
+            transactions = transactions.filter(date__range=[date_from, date_to])
+
+        if request.query_params.get("amount_min") and request.query_params.get(
+            "amount_max"
+        ):
+            amount_min = request.query_params.get("amount_min")
+            amount_max = request.query_params.get("amount_max")
+            transactions = transactions.filter(amount__range=[amount_min, amount_max])
+
         paginator = OnlyPageNumberPagination()
         result_page = paginator.paginate_queryset(transactions, request)
         serializer = TransactionSerializer(

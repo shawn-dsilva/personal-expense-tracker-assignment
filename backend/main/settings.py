@@ -85,7 +85,7 @@ REST_FRAMEWORK = {
         "users.authentication.CustomJWTAuthentication",
     ],
     "DEFAULT_PAGINATION_CLASS": "transactions.pagination.OnlyPageNumberPagination",
-    "PAGE_SIZE": 2,
+    "PAGE_SIZE": 4,
 }
 
 
