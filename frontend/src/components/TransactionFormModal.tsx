@@ -23,7 +23,7 @@ const TRANSACTION_TYPES = [
 ]
 
 
-const TransactionFormModal = ({ actionType, initialType = "", initialAmount = 0, initialDate = "", initialCategory = "" }) => {
+const TransactionFormModal = ({ actionType, initialType = "", initialAmount = 0, initialDate = "", initialCategory = "", onSubmit }) => {
 
     const [type, setType] = useState<"income" | "expense">(initialType)
     const [amount, setAmount] = useState<number>(initialAmount)

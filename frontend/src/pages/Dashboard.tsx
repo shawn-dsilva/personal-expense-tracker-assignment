@@ -19,9 +19,9 @@ const Dashboard = () => {
             <p>Welcome, {user.username}!</p>
             <div className='mx-auto w-lg'>
                 <TransactionOverview />
+                <TransactionFormModal actionType="Add" />
                 <TransactionList />
                 <CreateCategory />
-                <TransactionFormModal actionType="Add" />
             </div>
 
         </div>

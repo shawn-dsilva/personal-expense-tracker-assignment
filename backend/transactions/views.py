@@ -103,3 +103,26 @@ class ListAllCategoriesView(APIView):
     def get(self, request, *args, **kwargs):
         serializer = CategorySerializer(Category.objects.all(), many=True)
         return Response(serializer.data, status=200)
+
+
+class UpdateTransactionView(APIView):
+    def post(self, request, *args, **kwargs):
+        user = request.user.id
+
+        transaction = Transaction.objects.get(id=request.data.get("id"), user=user)
+
+        if transaction is None:
+            return Response(
+                {"error": "Transaction not found or unauthorized."}, status=404
+            )
+
+        serializer = TransactionSerializer(
+            instance=transaction,
+            data=request.data,
+            context={"request": request},
+        )
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=200)
+        return Response(serializer.errors, status=400)
