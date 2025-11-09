@@ -21,7 +21,7 @@ const TransactionItem = ({ data }) => {
             `font-bold my-auto ml-auto ${type === 'income' ? "text-green-500 before:content-['_+_']" : "text-red-500 before:content-['_-_']"
             }`
         }>${amount}</span>
-        <EditDeleteDropdown transactionId={id} />
+        <EditDeleteDropdown transactionData={data} />
 
     </li>
 }

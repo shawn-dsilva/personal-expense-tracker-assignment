@@ -12,21 +12,17 @@ import {
 import { Button } from './ui/button';
 import { useState } from 'react';
 import { useDeleteTransaction } from '@/hooks/useDeleteTransaction';
+import TransactionFormModal from './TransactionFormModal';
+import { Transaction } from '@/types';
+import { useUpdateTransaction } from '@/hooks/useEditTransaction';
 
-const EditDeleteDropdown = ({ transactionId }: { transactionId: number, }) => {
+const EditDeleteDropdown = ({ transactionData }: { transactionData: Transaction, }) => {
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false)
+
     const { mutate: deleteTransaction } = useDeleteTransaction();
-
-    const editTransaction = (transactionId: number) => {
-        console.log('Edit transaction with ID:', transactionId);
-        // Implement edit functionality here
-    };
-
-    const deleteTransactionHandler = (transactionId: number) => {
-        console.log('Delete transaction with ID:', transactionId);
-        deleteTransaction(transactionId);
-    };
+    const { mutate: updateTransaction } = useUpdateTransaction();
 
     return (
         <div className='pl-3'>
@@ -39,7 +35,7 @@ const EditDeleteDropdown = ({ transactionId }: { transactionId: number, }) => {
                         <Trash2 className="mr-2" />
                         Delete Transaction
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => editTransaction(transactionId)}>
+                    <DropdownMenuItem onSelect={() => setShowEditModal(true)}>
                         <SquarePenIcon className="mr-2" />
                         Edit Transaction
                     </DropdownMenuItem>
@@ -56,7 +52,7 @@ const EditDeleteDropdown = ({ transactionId }: { transactionId: number, }) => {
                         </DialogDescription>
                         <div className='flex gap-2 mt-4 justify-end'>
                             <Button variant="outline" onClick={() => setShowDeleteModal(false)}>Cancel</Button>
-                            <Button variant="destructive" onClick={() => { deleteTransactionHandler(transactionId); setShowDeleteModal(false); }}>
+                            <Button variant="destructive" onClick={() => { deleteTransaction(transactionData.id); setShowDeleteModal(false); }}>
                                 <Trash2 />
                                 Delete
                             </Button>
@@ -64,6 +60,9 @@ const EditDeleteDropdown = ({ transactionId }: { transactionId: number, }) => {
                     </DialogHeader>
                 </DialogContent>
             </Dialog>
+
+            <TransactionFormModal open={showEditModal} setOpen={setShowEditModal} actionType="Edit" transactionData={transactionData} submit={updateTransaction} />
+
         </div>
     )
 

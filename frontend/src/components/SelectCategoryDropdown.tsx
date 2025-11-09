@@ -11,12 +11,11 @@ import {
 } from "@/components/ui/select"
 import { capitalizeFirstLetter } from "@/lib/utils"
 
-export function SelectOptionsDropdown({ isLoading = false, label, placeholder, options, setCategory }: { isLoading: boolean, label: string, placeholder: string, options: { value: number, label: string }[], setCategory: React.Dispatch<React.SetStateAction<string>> }) {
-
+export function SelectOptionsDropdown({ value, isLoading = false, label, placeholder, options, setCategory }: { value: string, isLoading: boolean, label: string, placeholder: string, options: { value: number, label: string, }[], setCategory: React.Dispatch<React.SetStateAction<string>> }) {
 
     return (
         <div>
-            <Select onValueChange={setCategory}>
+            <Select value={value ? String(value) : undefined} onValueChange={setCategory}>
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>

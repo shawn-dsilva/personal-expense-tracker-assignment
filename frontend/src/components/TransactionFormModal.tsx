@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Label } from './ui/label'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
@@ -23,36 +23,38 @@ const TRANSACTION_TYPES = [
 ]
 
 
-const TransactionFormModal = ({ actionType, initialType = "", initialAmount = 0, initialDate = "", initialCategory = "", onSubmit }) => {
+const TransactionFormModal = ({ actionType, transactionData, submit, open, setOpen }) => {
 
-    const [type, setType] = useState<"income" | "expense">(initialType)
-    const [amount, setAmount] = useState<number>(initialAmount)
-    const [date, setDate] = useState<string>(initialDate)
-    const [category, setCategory] = useState<string>(initialCategory)
+    const [formData, setFormData] = useState({});
+
 
     const { mutate: createTransaction } = useCreateTransaction();
     const { data: categories, isLoading: categoriesLoading } = useGetAllCategories();
 
+    useEffect(() => {
+        console.log(transactionData)
+        if (transactionData) {
+            setFormData(transactionData)
+        }
+    }, [transactionData])
+
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const transactionData = {
-            type,
-            amount: parseFloat(amount),
-            date: date.from,
-            category: parseInt(category),
-        };
-        console.log('Transaction Data:', transactionData);
+        console.log('Transaction Data:', formData);
 
-        createTransaction(transactionData);
+        submit(transactionData);
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button size="lg" variant="outline">
-                    <CirclePlus />
-                    {actionType} Transaction
-                </Button>
+                {
+                    !transactionData && <Button size="lg" variant="outline">
+                        <CirclePlus />
+                        {actionType} Transaction
+                    </Button>
+                }
             </DialogTrigger>
             <DialogContent className="m-auto w-lg gap-2">
                 <DialogHeader className="text-center">
@@ -64,22 +66,23 @@ const TransactionFormModal = ({ actionType, initialType = "", initialAmount = 0,
                     <div className='flex flex-wrap gap-4 p-3'>
                         <div className='w-[48%] flex flex-col gap-3'>
                             <Label>Transaction Type</Label>
-                            <SelectOptionsDropdown options={TRANSACTION_TYPES} label="Transaction Type" placeholder="Income or Expense?" setCategory={setType} />
+                            <SelectOptionsDropdown value={formData.type} options={TRANSACTION_TYPES} label="Transaction Type" placeholder="Income or Expense?" setCategory={(type) => setFormData({ type: type })} />
                         </div>
                         <div className='w-[48%] flex flex-col gap-3'>
                             <Label>Amount</Label>
                             <Input
                                 type="number"
                                 name="amount"
-                                onChange={(e) => setAmount(e.target.value)}
+                                value={formData.amount}
+                                onChange={(e) => setFormData({ amount: e.target.value })}
                             />
                         </div>
                         <div className='w-[48%] flex flex-col gap-3'>
-                            <DatePicker date={date ? new Date(date.from) : undefined} setDate={(date) => setDate(date)} />
+                            <DatePicker date={formData.date ? new Date(formData.date) : undefined} setDate={(date) => setFormData({ date: date })} />
                         </div>
                         <div className='w-[48%] flex flex-col gap-3'>
                             <Label>Category</Label>
-                            <SelectOptionsDropdown isLoading={categoriesLoading} options={categories} label="Categories" placeholder="Select a category" setCategory={setCategory} />
+                            <SelectOptionsDropdown value={formData.category} isLoading={categoriesLoading} options={categories} label="Categories" placeholder="Select a category" setCategory={(category) => setCategory({ category: category })} />
                         </div>
                     </div>
                     <DialogFooter>
