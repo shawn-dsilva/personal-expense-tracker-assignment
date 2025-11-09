@@ -21,7 +21,7 @@ const Dashboard = () => {
                 <TransactionOverview />
                 <TransactionList />
                 <CreateCategory />
-                <CreateTransaction />
+                <CreateTransaction actionType="Add" />
             </div>
 
         </div>
