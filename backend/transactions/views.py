@@ -77,6 +77,19 @@ class DisplayTransactionSummaryView(APIView):
         return Response(summary, status=200)
 
 
+class DeleteTransactionView(APIView):
+    def delete(self, request, transaction_id, *args, **kwargs):
+        user = request.user.id
+        try:
+            transaction = Transaction.objects.get(id=transaction_id, user=user)
+            transaction.delete()
+            return Response(status=204)
+        except Transaction.DoesNotExist:
+            return Response(
+                {"error": "Transaction not found or unauthorized."}, status=404
+            )
+
+
 class CreateCategoryView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = CategorySerializer(data=request.data)

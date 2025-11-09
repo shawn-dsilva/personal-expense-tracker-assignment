@@ -11,19 +11,21 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from './ui/button';
 import { useState } from 'react';
+import { useDeleteTransaction } from '@/hooks/useDeleteTransaction';
 
 const EditDeleteDropdown = ({ transactionId }: { transactionId: number, }) => {
 
     const [showDeleteModal, setShowDeleteModal] = useState(false)
+    const { mutate: deleteTransaction } = useDeleteTransaction();
 
     const editTransaction = (transactionId: number) => {
         console.log('Edit transaction with ID:', transactionId);
         // Implement edit functionality here
     };
 
-    const deleteTransaction = (transactionId: number) => {
+    const deleteTransactionHandler = (transactionId: number) => {
         console.log('Delete transaction with ID:', transactionId);
-        // Implement delete functionality here
+        deleteTransaction(transactionId);
     };
 
     return (
@@ -54,7 +56,7 @@ const EditDeleteDropdown = ({ transactionId }: { transactionId: number, }) => {
                         </DialogDescription>
                         <div className='flex gap-2 mt-4 justify-end'>
                             <Button variant="outline" onClick={() => setShowDeleteModal(false)}>Cancel</Button>
-                            <Button variant="destructive" onClick={() => { deleteTransaction(transactionId); setShowDeleteModal(false); }}>
+                            <Button variant="destructive" onClick={() => { deleteTransactionHandler(transactionId); setShowDeleteModal(false); }}>
                                 <Trash2 />
                                 Delete
                             </Button>
