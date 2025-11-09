@@ -106,10 +106,12 @@ class ListAllCategoriesView(APIView):
 
 
 class UpdateTransactionView(APIView):
-    def post(self, request, *args, **kwargs):
+    def put(self, request, transaction_id, *args, **kwargs):
         user = request.user.id
+        mutable_data = deepcopy(request.data)
+        mutable_data["user"] = user
 
-        transaction = Transaction.objects.get(id=request.data.get("id"), user=user)
+        transaction = Transaction.objects.get(id=transaction_id, user=user)
 
         if transaction is None:
             return Response(
@@ -118,7 +120,7 @@ class UpdateTransactionView(APIView):
 
         serializer = TransactionSerializer(
             instance=transaction,
-            data=request.data,
+            data=mutable_data,
             context={"request": request},
         )
 
