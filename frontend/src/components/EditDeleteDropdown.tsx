@@ -61,7 +61,7 @@ const EditDeleteDropdown = ({ transactionData }: { transactionData: Transaction,
                 </DialogContent>
             </Dialog>
 
-            <TransactionFormModal open={showEditModal} setOpen={setShowEditModal} actionType="Edit" transactionData={transactionData} submit={updateTransaction} />
+            <TransactionFormModal open={showEditModal} setOpen={setShowEditModal} actionType="Edit" transactionData={transactionData} submitTransaction={updateTransaction} />
 
         </div>
     )

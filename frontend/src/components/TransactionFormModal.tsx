@@ -16,6 +16,7 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { CirclePlus } from 'lucide-react'
+import { set } from 'date-fns'
 
 const TRANSACTION_TYPES = [
     { value: "income", label: "Income" },
@@ -23,10 +24,13 @@ const TRANSACTION_TYPES = [
 ]
 
 
-const TransactionFormModal = ({ actionType, transactionData, submit, open, setOpen }) => {
+const TransactionFormModal = ({ actionType, transactionData, submitTransaction, open, setOpen }) => {
 
-    const [formData, setFormData] = useState({});
-
+    const [type, setType] = useState<"income" | "expense">("")
+    const [amount, setAmount] = useState<number>(0)
+    const [date, setDate] = useState<string>("")
+    const [category, setCategory] = useState<string>("")
+    const [transactionId, setTransactionId] = useState();
 
     const { mutate: createTransaction } = useCreateTransaction();
     const { data: categories, isLoading: categoriesLoading } = useGetAllCategories();
@@ -34,16 +38,31 @@ const TransactionFormModal = ({ actionType, transactionData, submit, open, setOp
     useEffect(() => {
         console.log(transactionData)
         if (transactionData) {
-            setFormData(transactionData)
+            setType(transactionData.type);
+            setAmount(transactionData.amount);
+            setDate({ from: transactionData.date });
+            setCategory(transactionData.category)
+            setTransactionId(transactionData.id)
         }
     }, [transactionData])
 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Transaction Data:', formData);
+        let transactionData = {
+            type,
+            amount: parseFloat(amount),
+            date: date.from,
+            category: parseInt(category),
+        };
 
-        submit(transactionData);
+        if (transactionId) {
+            transactionData.id = transactionId;
+        }
+
+        console.log('Transaction Data:', transactionData);
+
+        submitTransaction(transactionData);
     }
 
     return (
@@ -66,23 +85,23 @@ const TransactionFormModal = ({ actionType, transactionData, submit, open, setOp
                     <div className='flex flex-wrap gap-4 p-3'>
                         <div className='w-[48%] flex flex-col gap-3'>
                             <Label>Transaction Type</Label>
-                            <SelectOptionsDropdown value={formData.type} options={TRANSACTION_TYPES} label="Transaction Type" placeholder="Income or Expense?" setCategory={(type) => setFormData({ type: type })} />
+                            <SelectOptionsDropdown value={type} options={TRANSACTION_TYPES} label="Transaction Type" placeholder="Income or Expense?" setCategory={(type) => setType(type)} />
                         </div>
                         <div className='w-[48%] flex flex-col gap-3'>
                             <Label>Amount</Label>
                             <Input
                                 type="number"
                                 name="amount"
-                                value={formData.amount}
-                                onChange={(e) => setFormData({ amount: e.target.value })}
+                                value={amount}
+                                onChange={(e) => setAmount(e.target.value)}
                             />
                         </div>
                         <div className='w-[48%] flex flex-col gap-3'>
-                            <DatePicker date={formData.date ? new Date(formData.date) : undefined} setDate={(date) => setFormData({ date: date })} />
+                            <DatePicker date={date ? new Date(date.from) : undefined} setDate={(date) => setDate(date)} />
                         </div>
                         <div className='w-[48%] flex flex-col gap-3'>
                             <Label>Category</Label>
-                            <SelectOptionsDropdown value={formData.category} isLoading={categoriesLoading} options={categories} label="Categories" placeholder="Select a category" setCategory={(category) => setCategory({ category: category })} />
+                            <SelectOptionsDropdown value={category} isLoading={categoriesLoading} options={categories} label="Categories" placeholder="Select a category" setCategory={(category) => setCategory(category)} />
                         </div>
                     </div>
                     <DialogFooter>
