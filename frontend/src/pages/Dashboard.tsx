@@ -1,5 +1,5 @@
 import CreateCategory from '@/components/CreateCategory';
-import CreateTransaction from '@/components/CreateTransaction';
+import TransactionFormModal from '@/components/TransactionFormModal';
 import TransactionList from '@/components/TransactionList';
 import TransactionOverview from '@/components/TransactionOverview';
 import { useGetAuthUser } from '@/hooks/useGetAuthUser';
@@ -21,7 +21,7 @@ const Dashboard = () => {
                 <TransactionOverview />
                 <TransactionList />
                 <CreateCategory />
-                <CreateTransaction actionType="Add" />
+                <TransactionFormModal actionType="Add" />
             </div>
 
         </div>

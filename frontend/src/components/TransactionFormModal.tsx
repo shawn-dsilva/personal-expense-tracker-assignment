@@ -23,7 +23,7 @@ const TRANSACTION_TYPES = [
 ]
 
 
-const CreateTransaction = ({ actionType, initialType = "", initialAmount = 0, initialDate = "", initialCategory = "" }) => {
+const TransactionFormModal = ({ actionType, initialType = "", initialAmount = 0, initialDate = "", initialCategory = "" }) => {
 
     const [type, setType] = useState<"income" | "expense">(initialType)
     const [amount, setAmount] = useState<number>(initialAmount)
@@ -91,4 +91,4 @@ const CreateTransaction = ({ actionType, initialType = "", initialAmount = 0, in
     )
 }
 
-export default CreateTransaction
+export default TransactionFormModal
