@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
 
 
@@ -35,7 +35,7 @@ class Transaction(models.Model):
 class Budget(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     amount = models.IntegerField(validators=[MinValueValidator(1)])
-    date = models.DateTimeField()
-    month = models.PositiveIntegerField()
-    year = models.PositiveIntegerField()
+    month = models.PositiveIntegerField(
+        default=1, validators=[MinValueValidator(1), MaxValueValidator(12)], unique=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)

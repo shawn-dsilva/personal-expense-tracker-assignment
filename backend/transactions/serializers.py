@@ -1,7 +1,7 @@
 from os import read
 from unicodedata import category
 from rest_framework import serializers
-from .models import Category, Transaction
+from .models import Budget, Category, Transaction
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -20,3 +20,9 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ["id", "type", "amount", "date", "category_read", "category", "user"]
+
+
+class BudgetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Budget
+        fields = ["user", "month", "amount"]
