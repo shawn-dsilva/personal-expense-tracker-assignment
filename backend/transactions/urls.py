@@ -1,14 +1,12 @@
 from django.urls import path
-from .views import (
-    CreateCategoryView,
+from .views.transaction_view import (
     CreateTransactionView,
     DeleteTransactionView,
-    ListAllCategoriesView,
     ListAllTransactionsView,
     DisplayTransactionSummaryView,
     UpdateTransactionView,
 )
-
+from .views.categories_view import CreateCategoryView, ListAllCategoriesView
 
 urlpatterns = [
     path("transactions/add/", CreateTransactionView.as_view()),

@@ -30,3 +30,12 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f"{self.type} : {self.amount} on {self.date.strftime('%d-%m-%Y')}"
+
+
+class Budget(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    amount = models.IntegerField(validators=[MinValueValidator(1)])
+    date = models.DateTimeField()
+    month = models.PositiveIntegerField()
+    year = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)

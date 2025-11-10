@@ -5,7 +5,7 @@ from rest_framework.response import Response
 
 from transactions.models import Category, Transaction
 from transactions.serializers import CategorySerializer, TransactionSerializer
-from .pagination import OnlyPageNumberPagination
+from ..pagination import OnlyPageNumberPagination
 
 
 # Create your views here.
@@ -28,7 +28,6 @@ class CreateTransactionView(APIView):
 
 class ListAllTransactionsView(APIView, OnlyPageNumberPagination):
     def get(self, request, *args, **kwargs):
-        # TODO: ADD PAGINATION
 
         user = request.user.id
         transactions = Transaction.objects.filter(user=user).order_by("-date")
@@ -88,21 +87,6 @@ class DeleteTransactionView(APIView):
             return Response(
                 {"error": "Transaction not found or unauthorized."}, status=404
             )
-
-
-class CreateCategoryView(APIView):
-    def post(self, request, *args, **kwargs):
-        serializer = CategorySerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
-
-
-class ListAllCategoriesView(APIView):
-    def get(self, request, *args, **kwargs):
-        serializer = CategorySerializer(Category.objects.all(), many=True)
-        return Response(serializer.data, status=200)
 
 
 class UpdateTransactionView(APIView):
