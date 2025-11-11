@@ -37,7 +37,7 @@ if path.isfile(dotenv_file):
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
-DEBUG = "RENDER" not in os.environ
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
