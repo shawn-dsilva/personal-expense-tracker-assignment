@@ -38,7 +38,10 @@ SECRET_KEY = getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
 DEBUG = getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "http://localhost:3000",
+    "https://personal-expense-tracker-assignment.onrender.com",
+]
 
 
 # Application definition
