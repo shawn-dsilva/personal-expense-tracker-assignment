@@ -13,12 +13,12 @@ export const BarChart = ({ width, height, data }: BarplotProps) => {
     // bounds = area inside the graph axis = calculated by substracting the margins
     const boundsWidth = width - MARGIN.right - MARGIN.left;
     const boundsHeight = height - MARGIN.top - MARGIN.bottom;
-
+    console.log(data)
     // X axis is for groups since the barplot is vertical
-    const groups = data.sort((a, b) => b.value - a.value).map((d) => d.name);
+    // const groups = data.sort((a, b) => b.value - a.value).map((d) => d.name);
     const xScale = d3
         .scaleBand()
-        .domain(groups)
+        .domain(data.map(d => d.name))
         .range([0, boundsWidth])
         .padding(BAR_PADDING);
 
@@ -29,6 +29,10 @@ export const BarChart = ({ width, height, data }: BarplotProps) => {
         .domain([max * 1.2, 0])
         .range([0, boundsHeight]);
 
+    const colorScale = d3.scaleOrdinal()
+        .domain(data.map(d => d.name)) // Map categories to colors
+
+    colorScale.range(["#00c951", "#fb2c36", "#6a7282"]);
     // Build the shapes
     const allShapes = data.map((d, i) => {
         const x = xScale(d.name);
@@ -44,9 +48,9 @@ export const BarChart = ({ width, height, data }: BarplotProps) => {
                     width={xScale.bandwidth()}
                     height={boundsHeight - yScale(d.value)}
                     opacity={0.9}
-                    stroke="#6689c6"
-                    fill="#6689c6"
-                    fillOpacity={0.6}
+                    stroke={colorScale(d.name)}
+                    fill={colorScale(d.name)}
+                    fillOpacity={0.9}
                     strokeWidth={1}
                     rx={1}
                 />
@@ -97,7 +101,7 @@ export const BarChart = ({ width, height, data }: BarplotProps) => {
     ));
 
     return (
-        <div>
+        <div className='border-dashed border-2 rounded-lg mt-3'>
             <svg width={width} height={height}>
                 <g
                     width={boundsWidth}

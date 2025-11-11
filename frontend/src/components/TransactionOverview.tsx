@@ -42,7 +42,11 @@ const TransactionOverview = () => {
                     </Card>
                 ))}
             </div>
-            <BarChart data={Object.entries(summary).map(([key, value]) => ({ name: key, value }))} width={700} height={400} />
+            <BarChart data={[
+                { name: STYLE["total_income"].label, value: summary["total_income"] },
+                { name: STYLE["total_expense"].label, value: summary["total_expense"] },
+                { name: STYLE["balance"].label, value: summary["balance"] },
+            ]} width={512} height={380} />
         </div>
     )
 }
