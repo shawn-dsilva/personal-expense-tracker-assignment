@@ -1,3 +1,4 @@
+import BudgetOverview from '@/components/BudgetOverview';
 import CreateBudgetModal from '@/components/CreateBudgetModal';
 import CreateCategory from '@/components/CreateCategory';
 import TransactionFormModal from '@/components/TransactionFormModal';
@@ -20,6 +21,7 @@ const Dashboard = () => {
             <p>Welcome, {user.username}!</p>
             <div className='mx-auto w-lg'>
                 <TransactionOverview />
+                <BudgetOverview />
                 <TransactionFormModal actionType="Add" />
                 <CreateBudgetModal />
                 <TransactionList />

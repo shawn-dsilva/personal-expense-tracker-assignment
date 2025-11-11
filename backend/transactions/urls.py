@@ -1,6 +1,6 @@
 from django.urls import path
 
-from transactions.views.budget_view import CreateBudgetView
+from transactions.views.budget_view import BudgetStatisticsView, CreateBudgetView
 from .views.transaction_view import (
     CreateTransactionView,
     DeleteTransactionView,
@@ -19,4 +19,5 @@ urlpatterns = [
     path("categories/add/", CreateCategoryView.as_view()),
     path("categories/all/", ListAllCategoriesView.as_view()),
     path("budgets/add/", CreateBudgetView.as_view()),
+    path("budgets/stats/<int:month>/", BudgetStatisticsView.as_view()),
 ]

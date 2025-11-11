@@ -18,7 +18,12 @@ class CreateBudgetView(APIView):
 class BudgetStatisticsView(APIView):
     def get(self, request, month, *args, **kwargs):
         user = request.user.id
-        budget = Budget.objects.filter(user=user, date__month=month)
+        budget = Budget.objects.filter(user=user, month=month).first()
+
+        if budget is None:
+            return Response("No Budget for this Month found", status=404)
+
+        print(budget)
         transactions = Transaction.objects.filter(
             user=user, date__month=month
         ).order_by("-date")
