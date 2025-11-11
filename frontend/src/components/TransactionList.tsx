@@ -52,11 +52,12 @@ const TransactionList = () => {
             </div>
 
             <ul>
-                {transactions && transactions.results.length > 0 && (
-                    transactions.results.map((transaction) => (
-                        <TransactionItem data={transaction} />
-                    ))
-                )}
+                {isLoading ? <div>Loading Transactions</div> :
+                    transactions && transactions.results.length > 0 && (
+                        transactions.results.map((transaction) => (
+                            <TransactionItem data={transaction} />
+                        ))
+                    )}
             </ul>
             <PaginationControls transactions={transactions} currPage={currPage} setCurrPage={setCurrPage} />
         </div>
