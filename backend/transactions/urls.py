@@ -1,4 +1,6 @@
 from django.urls import path
+
+from transactions.views.budget_view import CreateBudgetView
 from .views.transaction_view import (
     CreateTransactionView,
     DeleteTransactionView,
@@ -16,4 +18,5 @@ urlpatterns = [
     path("transactions/update/<int:transaction_id>/", UpdateTransactionView.as_view()),
     path("categories/add/", CreateCategoryView.as_view()),
     path("categories/all/", ListAllCategoriesView.as_view()),
+    path("budgets/add/", CreateBudgetView.as_view()),
 ]

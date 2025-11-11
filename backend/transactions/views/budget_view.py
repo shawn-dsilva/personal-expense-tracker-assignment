@@ -6,7 +6,9 @@ from transactions.serializers import BudgetSerializer
 
 class CreateBudgetView(APIView):
     def post(self, request, *args, **kwargs):
-        serializer = BudgetSerializer(data=request.data)
+        user = request.user.id
+        data = {**request.data, "user": user}
+        serializer = BudgetSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)

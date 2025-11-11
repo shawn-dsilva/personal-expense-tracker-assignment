@@ -13,6 +13,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { BadgeDollarSign } from "lucide-react";
+import { useCreateBudget } from "@/hooks/useCreateBudget";
 
 const MONTHS = [
     {
@@ -70,13 +71,15 @@ const CreateBudgetModal = () => {
     const [amount, setAmount] = useState("");
     const [month, setMonth] = useState("");
 
+    const { mutate: createBudget } = useCreateBudget()
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        createBudget({ amount });
+        createBudget({ amount, month });
         setAmount("");
+        setMonth(undefined);
     }
-
+    { console.log(month) }
     return (
         <Dialog>
             <DialogTrigger asChild>
