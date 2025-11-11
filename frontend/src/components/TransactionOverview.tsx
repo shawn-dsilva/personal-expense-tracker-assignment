@@ -1,9 +1,7 @@
-import { ArrowDown, ArrowUp, MinusIcon, PlusIcon } from 'lucide-react'
-import React from 'react'
+import { ArrowDown, ArrowUp, Key, MinusIcon, PlusIcon } from 'lucide-react'
 import { Card, CardContent } from './ui/card'
 import { useGetTransactionSummary } from '@/hooks/useGetTransactionSummary'
-
-
+import { BarChart } from './BarChart'
 
 const STYLE = {
     total_income: {
@@ -44,6 +42,7 @@ const TransactionOverview = () => {
                     </Card>
                 ))}
             </div>
+            <BarChart data={Object.entries(summary).map(([key, value]) => ({ name: key, value }))} width={700} height={400} />
         </div>
     )
 }
