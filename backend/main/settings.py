@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from datetime import timedelta
 from os import getenv, path
 from pathlib import Path
@@ -36,12 +37,13 @@ if path.isfile(dotenv_file):
 
 SECRET_KEY = getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 
-DEBUG = getenv("DEBUG", "False") == "True"
+DEBUG = "RENDER" not in os.environ
 
-ALLOWED_HOSTS = [
-    "http://localhost:3000",
-    "https://personal-expense-tracker-assignment.onrender.com",
-]
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 # Application definition
