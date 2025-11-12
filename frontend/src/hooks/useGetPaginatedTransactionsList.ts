@@ -30,7 +30,6 @@ export async function getAllTransactions(currentPage:number, filters:Transaction
     if (res.ok) {
       const data = await res.json();
   
-      console.log(data);
       return data;
     } 
 }

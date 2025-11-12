@@ -36,7 +36,6 @@ const TransactionFormModal = ({ actionType, transactionData, submitTransaction, 
     const { data: categories, isLoading: categoriesLoading } = useGetAllCategories();
 
     useEffect(() => {
-        console.log(transactionData)
         if (transactionData) {
             setType(transactionData.type);
             setAmount(transactionData.amount);
@@ -60,7 +59,6 @@ const TransactionFormModal = ({ actionType, transactionData, submitTransaction, 
             transactionData.id = transactionId;
         }
 
-        console.log('Transaction Data:', transactionData);
 
         submitTransaction(transactionData);
     }

@@ -7,7 +7,6 @@ export function useCreateTransaction() {
 
   return useMutation({
     mutationFn: async (data: Transaction) => {
-      console.log(data);
       const res = await fetch(`${API_BASE_URL}/api/transactions/add/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -17,11 +16,9 @@ export function useCreateTransaction() {
       if (res.ok) {
         const data = await res.json();
 
-        console.log(data);
         return data;
       } else {
         const text = await res.json();
-        console.log(text);
         throw new Error(text.detail);
       }
     },

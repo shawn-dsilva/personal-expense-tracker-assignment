@@ -79,7 +79,6 @@ const CreateBudgetModal = () => {
         setAmount("");
         setMonth(undefined);
     }
-    { console.log(month) }
     return (
         <Dialog>
             <DialogTrigger asChild>

@@ -30,10 +30,9 @@ const BudgetOverview = () => {
     }
 
 
-    { console.log(data) }
     return (
         <div className='p-3 border-2 rounded-lg flex w-lg flex-col'>
-            <h2 className='text-2xl font-bold mx-auto m-3'> Budget Overview</h2>
+            <h2 className='text-3xl pb-3 font-bold mx-auto m-3'> Budget Overview</h2>
             <div className='flex flex-row gap-2 w-full'>
                 <div className='w-[49%]'>
                     <h3 className='text-xl font-bold'>Monthly Budget</h3>

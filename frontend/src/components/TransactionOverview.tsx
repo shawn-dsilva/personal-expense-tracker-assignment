@@ -29,8 +29,14 @@ const TransactionOverview = () => {
 
     return (
         <div className='flex w-lg mx-auto flex-col pb-4'>
-            <h2 className='text-2xl font-bold mx-auto m-3'>Financial Summary</h2>
-            <div className='flex gap-3'>
+            <h2 className='text-3xl pb-3 font-bold mx-auto m-3'>Financial Summary</h2>
+
+            <BarChart data={[
+                { name: STYLE["total_income"].label, value: summary["total_income"] },
+                { name: STYLE["total_expense"].label, value: summary["total_expense"] },
+                { name: STYLE["balance"].label, value: summary["balance"] },
+            ]} width={512} height={380} colorRange={["#00c951", "#fb2c36", "#6a7282"]} />
+            <div className='flex gap-3 pt-5'>
                 {Object.entries(summary).map(([key, value]) => (
                     <Card key={key} className='w-1/3 py-4 items-center'>
                         <CardContent>
@@ -42,11 +48,6 @@ const TransactionOverview = () => {
                     </Card>
                 ))}
             </div>
-            <BarChart data={[
-                { name: STYLE["total_income"].label, value: summary["total_income"] },
-                { name: STYLE["total_expense"].label, value: summary["total_expense"] },
-                { name: STYLE["balance"].label, value: summary["balance"] },
-            ]} width={512} height={380} colorRange={["#00c951", "#fb2c36", "#6a7282"]} />
         </div>
     )
 }

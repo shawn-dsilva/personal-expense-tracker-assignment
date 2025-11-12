@@ -13,7 +13,6 @@ export const BarChart = ({ width, height, data, lineValue, colorRange }: Barplot
     // bounds = area inside the graph axis = calculated by substracting the margins
     const boundsWidth = width - MARGIN.right - MARGIN.left;
     const boundsHeight = height - MARGIN.top - MARGIN.bottom;
-    console.log(data)
     // X axis is for groups since the barplot is vertical
     // const groups = data.sort((a, b) => b.value - a.value).map((d) => d.name);
     const xScale = d3
