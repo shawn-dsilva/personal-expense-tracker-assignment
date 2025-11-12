@@ -1,5 +1,18 @@
 import { useGetBudgetStats } from '@/hooks/useGetBudgetStats';
 import dayjs from 'dayjs';
+import { ArrowDown, ArrowUp } from 'lucide-react';
+
+const STYLE = {
+    total_income: {
+        icon: <ArrowUp />, color: "text-green-500", label: "Total Income"
+    },
+    total_expense: {
+        icon: <ArrowDown />, color: "text-red-500", label: "Total Expense"
+    },
+    balance: {
+        icon: null, color: "text-gray-500", label: "Balance"
+    }
+}
 
 const BudgetOverview = () => {
 
@@ -17,23 +30,23 @@ const BudgetOverview = () => {
 
     { console.log(data) }
     return (
-        <div>
-            <h1>BudgetOverview</h1>
-            <div>
-                {
-
-                    Object.entries(data).map(([key, value]) => {
-                        if (key === "over_budget") {
-                            return value ? <p>You are Over Budget!</p> : <p>Congrats You Are Under Budget</p>
-                        }
-                        return <div>
-                            <p><span className='font-semibold'>{key} </span>
-                                {value}</p>
-                        </div>
-                    }
-                    )
-                }
+        <div className='p-3 border-dashed border-2 rounded-lg flex w-lg flex-col'>
+            <h2 className='text-2xl font-bold mx-auto m-3'> Budget Overview</h2>
+            <div className='flex flex-row gap-2 w-full'>
+                <div className='w-[49%]'>
+                    <h3 className='text-xl font-bold'>Monthly Budget</h3>
+                    <p className="font-bold text-xl text-blue-500">{data["budget"]}</p>
+                </div>
+                <div className='w-[49%]'>
+                    <h3 className='text-xl font-bold'>Total Expense</h3>
+                    <p className='font-bold text-xl text-red-500'>{data["total_expense"]}</p>
+                </div>
             </div>
+            {
+                <p className='text-lg py-3'>
+                    {data["over_budget"] ? <span>You are Over Budget </span> : <span>Congrats You Are Under Budget</span>} by  <span className={`font-bold text-xl ${data["over_budget"] ? "text-red-500" : "text-green-500"}`}>{data["budget_difference"]}</span></p>
+            }
+
         </div >
     )
 }
