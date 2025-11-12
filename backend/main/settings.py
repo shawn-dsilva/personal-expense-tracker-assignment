@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "users",
     "transactions",
+    "drf_spectacular",
 ]
 
 AUTH_COOKIE = "access"
@@ -103,6 +104,15 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_PAGINATION_CLASS": "transactions.pagination.OnlyPageNumberPagination",
     "PAGE_SIZE": 4,
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Personal Expense Tracker",
+    "DESCRIPTION": "Track your Income, Expenses and set Budgets",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
 }
 
 
