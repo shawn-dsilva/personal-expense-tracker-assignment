@@ -2,11 +2,11 @@ import { useGetPaginatedTransactions } from '@/hooks/useGetPaginatedTransactions
 import { capitalizeFirstLetter } from '@/lib/utils';
 import dayjs from 'dayjs';
 
-
 import { useState } from 'react';
 import PaginationControls from './PaginationControls';
 import FilterTransactionsModal from './FilterTransactionsModal';
 import EditDeleteDropdown from './EditDeleteDropdown';
+import LoadingSpinner from './LoadingSpinner';
 
 const TransactionItem = ({ data }) => {
     const { id, type, category_read, amount, date } = data;
@@ -31,11 +31,11 @@ const TransactionList = () => {
     const [currPage, setCurrPage] = useState(1);
     const [filters, setFilters] = useState({});
 
-    const { data: transactions, isLoading, isError } = useGetPaginatedTransactions(currPage, filters);
+    const { data: transactions, isLoading, isFetching, isError } = useGetPaginatedTransactions(currPage, filters);
 
 
     if (isLoading) {
-        return <p>Loading...</p>
+        return <LoadingSpinner message={"Loading Transactions"} className={"w-full h-[400px]"} />
     }
 
     if (isError) {
@@ -52,7 +52,7 @@ const TransactionList = () => {
             </div>
 
             <ul>
-                {isLoading ? <div>Loading Transactions</div> :
+                {isFetching ? <LoadingSpinner className={"w-full h-[380px]"} message={"Loading Transactions"} /> :
                     transactions && transactions.results.length > 0 && (
                         transactions.results.map((transaction) => (
                             <TransactionItem data={transaction} />

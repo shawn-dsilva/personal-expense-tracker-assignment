@@ -17,8 +17,6 @@ const Dashboard = () => {
 
     return (
         <div>
-            <h1>Dashboard</h1>
-            <p>Welcome, {user.username}!</p>
             <div className='mx-auto w-lg'>
                 <TransactionOverview />
                 <BudgetOverview />
