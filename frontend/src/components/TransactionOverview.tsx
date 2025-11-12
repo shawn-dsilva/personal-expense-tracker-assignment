@@ -46,7 +46,7 @@ const TransactionOverview = () => {
                 { name: STYLE["total_income"].label, value: summary["total_income"] },
                 { name: STYLE["total_expense"].label, value: summary["total_expense"] },
                 { name: STYLE["balance"].label, value: summary["balance"] },
-            ]} width={512} height={380} />
+            ]} width={512} height={380} colorRange={["#00c951", "#fb2c36", "#6a7282"]} />
         </div>
     )
 }

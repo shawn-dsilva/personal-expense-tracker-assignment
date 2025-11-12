@@ -9,7 +9,7 @@ type BarplotProps = {
     data: { name: string; value: number }[];
 };
 
-export const BarChart = ({ width, height, data }: BarplotProps) => {
+export const BarChart = ({ width, height, data, lineValue, colorRange }: BarplotProps) => {
     // bounds = area inside the graph axis = calculated by substracting the margins
     const boundsWidth = width - MARGIN.right - MARGIN.left;
     const boundsHeight = height - MARGIN.top - MARGIN.bottom;
@@ -32,7 +32,7 @@ export const BarChart = ({ width, height, data }: BarplotProps) => {
     const colorScale = d3.scaleOrdinal()
         .domain(data.map(d => d.name)) // Map categories to colors
 
-    colorScale.range(["#00c951", "#fb2c36", "#6a7282"]);
+    colorScale.range(colorRange);
     // Build the shapes
     const allShapes = data.map((d, i) => {
         const x = xScale(d.name);
@@ -100,6 +100,39 @@ export const BarChart = ({ width, height, data }: BarplotProps) => {
         </g>
     ));
 
+    const BudgetLine = ({ lineValue }) => {
+        return (<g key={"budget"}>
+            <line
+                x1={0}
+                x2={boundsWidth}
+                y1={yScale(lineValue)}
+                y2={yScale(lineValue)}
+                stroke="#2b7fff"
+                strokeWidth={5}
+                strokeDasharray="20,3" />
+            <text
+                x={420}
+                y={yScale(lineValue) - 35}
+                textAnchor="middle"
+                fontSize={15}
+                startOffset="50%"
+                stroke="#2b7fff"
+            >
+                Budget
+            </text>
+            <text
+                x={420}
+                y={yScale(lineValue) - 15}
+                textAnchor="middle"
+                fontSize={15}
+                startOffset="50%"
+                stroke="#2b7fff"
+            >
+                {lineValue}
+            </text>
+        </g>)
+    }
+
     return (
         <div className='border-dashed border-2 rounded-lg mt-3'>
             <svg width={width} height={height}>
@@ -110,6 +143,7 @@ export const BarChart = ({ width, height, data }: BarplotProps) => {
                 >
                     {grid}
                     {allShapes}
+                    {lineValue && BudgetLine({ lineValue })}
                 </g>
             </svg>
         </div>

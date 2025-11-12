@@ -43,7 +43,7 @@ const TransactionList = () => {
     }
 
     return (
-        <div className="flex w-lg gap-2 flex-col mx-auto p-4 border-dashed border-2 border-gray-300 rounded-md my-4">
+        <div className="flex w-lg gap-2 flex-col mx-auto p-4  border-2 border-gray-300 rounded-md my-4">
             <div className='relative flex'>
                 <h2 className='text-2xl font-bold mx-auto my-3'>
                     Transaction List
