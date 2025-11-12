@@ -29,7 +29,7 @@ const TransactionOverview = () => {
 
     return (
         <div className='flex w-lg mx-auto flex-col pb-4'>
-            <h2 className='text-2xl font-bold mx-auto m-3'>Transaction Overview</h2>
+            <h2 className='text-2xl font-bold mx-auto m-3'>Financial Summary</h2>
             <div className='flex gap-3'>
                 {Object.entries(summary).map(([key, value]) => (
                     <Card key={key} className='w-1/3 py-4 items-center'>

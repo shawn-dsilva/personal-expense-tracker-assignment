@@ -83,7 +83,7 @@ const CreateBudgetModal = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={"outline"} size={"lg"} className="m-3">
+                <Button variant={"outline"} size={"lg"}>
                     <BadgeDollarSign />
                     Set Monthly Budget
                 </Button>
